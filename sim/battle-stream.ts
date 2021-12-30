@@ -13,6 +13,8 @@ import {Streams, Utils} from '../lib';
 import {Teams} from './teams';
 import {Battle} from './battle';
 
+const fs = require('fs');
+
 /**
  * Like string.split(delimiter), but only recognizes the first `limit`
  * delimiters (default 1).
@@ -221,6 +223,18 @@ export class BattleStream extends Streams.ObjectReadWriteStream<string> {
 			break;
 		case 'version':
 		case 'version-origin':
+			break;
+		case 'tojson':
+			fs.writeFileSync(message, JSON.stringify(this.battle!.toJSON()));
+			break;
+		case 'fromjson':
+			const send = this.battle!.send;
+			const rawdata = JSON.parse(fs.readFileSync(message));
+			this.battle = Battle.fromJSON(rawdata);
+			this.battle.log.forEach(line => {
+				console.log(line);
+			});
+			this.battle.restart(send);
 			break;
 		default:
 			throw new Error(`Unrecognized command ">${type} ${message}"`);
