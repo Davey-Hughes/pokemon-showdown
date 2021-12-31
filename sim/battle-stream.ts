@@ -337,6 +337,8 @@ export abstract class BattlePlayer {
 		for await (const chunk of this.stream) {
 			this.receive(chunk);
 		}
+
+		this.receiveRequest({'end': 'end'});
 	}
 
 	receive(chunk: string) {

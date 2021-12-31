@@ -10,7 +10,7 @@
  */
 
 import {BattleStream, getPlayerStreams, Teams} from '..';
-import {RandomPlayerAI} from '../tools/random-player-ai';
+import {IPCPlayer} from '../tools/ipc-player';
 
 /*********************************************************************
  * Run AI
@@ -31,14 +31,11 @@ const p2spec = {
 	team: Teams.pack(Teams.generate('gen7randombattle')),
 };
 
-// const p1 = new RandomPlayerAI(streams.p1, {}, true);
-// const p2 = new RandomPlayerAI(streams.p2, {}, true);
+const p1 = new IPCPlayer(streams.p1, {}, false, "p1");
+const p2 = new IPCPlayer(streams.p2, {}, false, "p2");
 
-// console.log("p1 is " + p1.constructor.name);
-// console.log("p2 is " + p2.constructor.name);
-
-// void p1.start();
-// void p2.start();
+void p1;
+void p2;
 
 void (async () => {
 	for await (const chunk of streams.omniscient) {
@@ -46,22 +43,7 @@ void (async () => {
 	}
 })();
 
-const readline = require('readline');
-
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
-
-rl.setPrompt('');
-
-rl.on('line', (input) => {
-		void streams.omniscient.write(input);
-});
-
 void streams.omniscient.write(`>start ${JSON.stringify(spec)}
 >player p1 ${JSON.stringify(p1spec)}
 >player p2 ${JSON.stringify(p2spec)}
->p1 default
->p2 default
 `);
