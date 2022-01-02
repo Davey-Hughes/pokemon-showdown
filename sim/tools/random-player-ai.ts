@@ -34,7 +34,7 @@ export class RandomPlayerAI extends BattlePlayer {
 	}
 
 	receiveRequest(request: AnyObject) {
-		if (request.wait) {
+		if (request.wait || request.end) {
 			// wait request
 			// do nothing
 		} else if (request.forceSwitch) {
