@@ -31,8 +31,8 @@ const p2spec = {
 	team: Teams.pack(Teams.generate('gen7randombattle')),
 };
 
-const p1 = new IPCPlayer(streams.p1, {}, false, "p1");
-const p2 = new IPCPlayer(streams.p2, {}, false, "p2");
+const p1 = new IPCPlayer(streams.p1, {}, false, process.argv[2]);
+const p2 = new IPCPlayer(streams.p2, {}, false, process.argv[3]);
 
 void p1;
 void p2;

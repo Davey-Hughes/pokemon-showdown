@@ -29,6 +29,7 @@ export class IPCPlayer extends BattlePlayer {
 
 	socketConnect(ipcName) {
 		this.socket = net.connect("/tmp/" + ipcName, () => {
+			void this.start();
 		});
 
 		this.socket.setMaxListeners(50);
@@ -54,10 +55,6 @@ export class IPCPlayer extends BattlePlayer {
 		});
 
 		this.socket.on('close', () => {
-		});
-
-		this.socket.on('connect', () => {
-			void this.start();
 		});
 
 		process.on('exit', () => {
@@ -103,10 +100,16 @@ export class IPCPlayer extends BattlePlayer {
 				return canSwitch.map(m => `switch ${m}`);
 			});
 
-			this.socket.write(JSON.stringify({
+			const bufferNull = Buffer.from([0x0]);
+
+			const message = Buffer.from(JSON.stringify({
 				'command': 'forceSwitch',
 				'choices': choices[0],
 			}));
+
+			this.socket.write(
+				Buffer.concat([message, bufferNull])
+			);
 
 			this.mc.port1.onmessage = ({data}) => {
 				this.choose(choices[0][data['switch']]);
@@ -200,10 +203,15 @@ export class IPCPlayer extends BattlePlayer {
 				return move_numbers.concat(switch_choices);
 			});
 
-			this.socket.write(JSON.stringify({
+			const bufferNull = Buffer.from([0x0]);
+			const message = Buffer.from(JSON.stringify({
 				'command': 'active',
 				'choices': choices[0],
 			}));
+
+			this.socket.write(
+				Buffer.concat([message, bufferNull])
+			);
 
 			this.mc.port1.onmessage = ({data}) => {
 				this.choose(choices[0][data['active']]);
