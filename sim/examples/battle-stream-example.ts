@@ -39,12 +39,6 @@ console.log("p2 is " + p2.constructor.name);
 void p1.start();
 void p2.start();
 
-void (async () => {
-	for await (const chunk of streams.omniscient) {
-		console.log(chunk);
-	}
-})();
-
 void streams.omniscient.write(`>start ${JSON.stringify(spec)}
 >player p1 ${JSON.stringify(p1spec)}
 >player p2 ${JSON.stringify(p2spec)}`);

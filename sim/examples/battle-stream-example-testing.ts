@@ -9,8 +9,8 @@
  * @author Guangcong Luo <guangcongluo@gmail.com>
  */
 
-import {BattleStream, getPlayerStreams, Teams} from '..';
-import {RandomPlayerAI} from '../tools/random-player-ai';
+import {BattleStream, getPlayerStreams} from '..';
+// import {RandomPlayerAI} from '../tools/random-player-ai';
 const fs = require('fs');
 
 /*********************************************************************
@@ -25,11 +25,11 @@ const spec = {
 };
 const p1spec = {
 	name: "Bot 1",
-	team: "Articuno||leftovers|pressure|electricterrain,hurricane,substitute,roost|Modest|252,,,252,4,||,,,30,30,|||]Ludicolo||lifeorb|swiftswim|surf,gigadrain,icebeam,raindance|Modest|4,,,252,,252|||||]Volbeat||damprock|prankster|tailglow,batonpass,encore,raindance|Bold|248,,252,,8,|M||||]Seismitoad||lifeorb|swiftswim|hydropump,earthpower,stealthrock,raindance|Modest|,,,252,4,252|||||]Alomomola||damprock|regenerator|wish,protect,toxic,raindance|Bold|252,,252,,4,|||||]Armaldo||leftovers|swiftswim|xscissor,stoneedge,aquatail,rapidspin|Adamant|128,252,4,,,124|||||"
+	team: "Articuno||leftovers|pressure|electricterrain,hurricane,substitute,roost|Modest|252,,,252,4,||,,,30,30,|||]Ludicolo||lifeorb|swiftswim|surf,gigadrain,icebeam,raindance|Modest|4,,,252,,252|||||]Volbeat||damprock|prankster|tailglow,batonpass,encore,raindance|Bold|248,,252,,8,|M||||]Seismitoad||lifeorb|swiftswim|hydropump,earthpower,stealthrock,raindance|Modest|,,,252,4,252|||||]Alomomola||damprock|regenerator|wish,protect,toxic,raindance|Bold|252,,252,,4,|||||]Armaldo||leftovers|swiftswim|xscissor,stoneedge,aquatail,rapidspin|Adamant|128,252,4,,,124|||||",
 };
 const p2spec = {
 	name: "Bot 2",
-	team: "Articuno||leftovers|pressure|trickroom,hurricane,substitute,roost|Modest|252,,,252,4,||,,,30,30,|||]Ludicolo||lifeorb|swiftswim|surf,gigadrain,icebeam,raindance|Modest|4,,,252,,252|||||]Volbeat||damprock|prankster|tailglow,batonpass,encore,raindance|Bold|248,,252,,8,|M||||]Seismitoad||lifeorb|swiftswim|hydropump,earthpower,stealthrock,raindance|Modest|,,,252,4,252|||||]Alomomola||damprock|regenerator|wish,protect,toxic,raindance|Bold|252,,252,,4,|||||]Armaldo||leftovers|swiftswim|xscissor,stoneedge,aquatail,rapidspin|Adamant|128,252,4,,,124|||||"
+	team: "Articuno||leftovers|pressure|trickroom,hurricane,substitute,roost|Modest|252,,,252,4,||,,,30,30,|||]Ludicolo||lifeorb|swiftswim|surf,gigadrain,icebeam,raindance|Modest|4,,,252,,252|||||]Volbeat||damprock|prankster|tailglow,batonpass,encore,raindance|Bold|248,,252,,8,|M||||]Seismitoad||lifeorb|swiftswim|hydropump,earthpower,stealthrock,raindance|Modest|,,,252,4,252|||||]Alomomola||damprock|regenerator|wish,protect,toxic,raindance|Bold|252,,252,,4,|||||]Armaldo||leftovers|swiftswim|xscissor,stoneedge,aquatail,rapidspin|Adamant|128,252,4,,,124|||||",
 };
 
 // const p1 = new RandomPlayerAI(streams.p1);
@@ -49,7 +49,7 @@ void (async () => {
 
 	for await (const chunk of streams.omniscient) {
 		console.log(chunk);
-		const turn = battlestream.battle.turn.toString().padStart(3, '0');
+		// const turn = battlestream.battle.turn.toString().padStart(3, '0');
 		const battle_output = JSON.stringify(battlestream.battle.toJSON(), null, 4);
 		if (battle_output !== null) {
 			fs.writeFileSync(`${battle_json_dir}/test.json`, battle_output);
