@@ -72,6 +72,7 @@ export class IPCPlayer extends BattlePlayer {
 
 		process.on("exit", () => {
 			this.socket.end();
+			this.ipc_mc.port1.close();
 		});
 
 		process.on("SIGINT", () => {

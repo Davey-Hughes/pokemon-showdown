@@ -122,6 +122,7 @@ export class IPCManager extends BattlePlayer {
 			if (request.item === "exit") {
 				this.socket.end();
 				this.mc.port1.close();
+				process.exit();
 			}
 		}
 	}
@@ -161,6 +162,7 @@ export class IPCManager extends BattlePlayer {
 			battleState: battleJSON,
 		};
 
+		console.log(savedBattleState);
 		this.turns[turn] = savedBattleState;
 		this.lastBattleState = savedBattleState;
 	}
